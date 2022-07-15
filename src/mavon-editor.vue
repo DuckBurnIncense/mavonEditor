@@ -1,21 +1,46 @@
 <template>
-    <div :class="[{ 'fullscreen': s_fullScreen, 'shadow': boxShadow }]" class="v-note-wrapper markdown-body" :style="{'box-shadow': boxShadow ? boxShadowStyle : ''}">
+    <div 
+        :class="[{ 'fullscreen': s_fullScreen, 'shadow': boxShadow }]" 
+        class="v-note-wrapper markdown-body" 
+        :style="{'box-shadow': boxShadow ? boxShadowStyle : ''}"
+    >
         <!--工具栏-->
-        <div class="v-note-op" v-show="toolbarsFlag" :style="{'background': toolbarsBackground}">
-            <v-md-toolbar-left ref="toolbar_left" :editable="editable" :transition="transition" :d_words="d_words"
-                               @toolbar_left_click="toolbar_left_click" @toolbar_left_addlink="toolbar_left_addlink" :toolbars="toolbars"
-                               @imgAdd="$imgAdd" @imgDel="$imgDel" @imgTouch="$imgTouch" :image_filter="imageFilter"
-                               :class="{'transition': transition}">
+        <div 
+            class="v-note-op" 
+            v-show="toolbarsFlag" 
+            :style="{'background': cssBgcConfig.toolbar.bgc}"
+        >
+            <v-md-toolbar-left 
+                ref="toolbar_left" 
+                :editable="editable" 
+                :transition="transition" 
+                :d_words="d_words"
+                @toolbar_left_click="toolbar_left_click" 
+                @toolbar_left_addlink="toolbar_left_addlink" 
+                :toolbars="toolbars"
+                @imgAdd="$imgAdd" 
+                @imgDel="$imgDel" 
+                @imgTouch="$imgTouch" 
+                :image_filter="imageFilter"
+                :class="{'transition': transition}"
+                :css-bgc="cssBgcConfig.toolbar"
+            >
                 <slot name="left-toolbar-before" slot="left-toolbar-before" />
                 <slot name="left-toolbar-after" slot="left-toolbar-after" />
             </v-md-toolbar-left>
-            <v-md-toolbar-right ref="toolbar_right" :d_words="d_words" @toolbar_right_click="toolbar_right_click"
-                                :toolbars="toolbars"
-                                :s_subfield="s_subfield"
-                                :s_preview_switch="s_preview_switch" :s_fullScreen="s_fullScreen"
-                                :s_html_code="s_html_code"
-                                :s_navigation="s_navigation"
-                                :class="{'transition': transition}">
+            <v-md-toolbar-right 
+                ref="toolbar_right" 
+                :d_words="d_words" 
+                @toolbar_right_click="toolbar_right_click"
+                :toolbars="toolbars"
+                :s_subfield="s_subfield"
+                :s_preview_switch="s_preview_switch" 
+                :s_fullScreen="s_fullScreen"
+                :s_html_code="s_html_code"
+                :s_navigation="s_navigation"
+                :class="{'transition': transition}"
+                :css-bgc="cssBgcConfig.toolbar"
+            >
                 <slot name="right-toolbar-before" slot="right-toolbar-before" />
                 <slot name="right-toolbar-after" slot="right-toolbar-after" />
             </v-md-toolbar-right>
@@ -239,7 +264,10 @@ export default {
         shortCut:{
             type: Boolean,
             default: true
-        }
+        },
+        cssBgc:{
+            type: Object
+        },
     },
     data() {
         return {
@@ -311,6 +339,20 @@ export default {
             textarea_selectionEnds: [0],
             _xssHandler: null
         };
+    },
+    computed: {
+        cssBgcConfig() {
+            const defaultConfig = {
+                toolbar: {
+                    bgc: 'rgb(255, 255, 255)',
+                    buttonHoverBgc: '#e9e9eb',
+                }
+            };
+            return {
+                ...defaultConfig,
+                ...this.cssBgc
+            }
+        }
     },
     created() {
         var $vm = this;
@@ -716,7 +758,7 @@ export default {
     components: {
         'v-autoTextarea': autoTextarea,
         'v-md-toolbar-left': md_toolbar_left,
-        'v-md-toolbar-right': md_toolbar_right
+        'v-md-toolbar-right': md_toolbar_right,
     }
 };
 </script>

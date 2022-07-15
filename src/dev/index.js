@@ -10,7 +10,7 @@
  */
 
 import Vue from 'vue';
-var demo = require('./demo.vue');
+var demo = require('./editor.vue');
 var sMd = require('../index.js');
 
 Vue.use(sMd);

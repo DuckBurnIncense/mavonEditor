@@ -1,3 +1,5 @@
+弃坑中......
+
 # mavonEditor
 
 | Vue2 | [![npm](https://img.shields.io/npm/v/mavon-editor/latest.svg)](https://www.npmjs.com/package/mavon-editor/v/latest) |
